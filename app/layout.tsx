@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 
 import "./globals.css";
+import "react-tooltip/dist/react-tooltip.css";
 
 const nunito = Nunito({ subsets: ["latin"], weight: "400" });
 

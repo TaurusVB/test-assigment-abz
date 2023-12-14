@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import React, { FC } from "react";
+import { Tooltip } from "react-tooltip";
 
 import photoCover from "@/public/assets/photo-cover.svg";
 
@@ -27,8 +30,23 @@ const UserItem: FC<IUserItemProps> = ({
       />
       <p className="my-5 text-base/[26px]">{name}</p>
       <p>{position}</p>
-      <p>{email}</p>
-      <p>{phone}</p>
+      <a
+        data-tooltip-id="my-tooltip"
+        data-tooltip-content={email}
+        data-tooltip-place="bottom"
+        href={`mailto:${email}`}
+      >
+        {email}
+      </a>
+      <a
+        data-tooltip-id="my-tooltip"
+        data-tooltip-content={phone}
+        data-tooltip-place="bottom"
+        href={`tel:${phone}`}
+      >
+        {phone}
+      </a>
+      <Tooltip id="my-tooltip" />
     </li>
   );
 };
