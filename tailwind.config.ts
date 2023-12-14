@@ -13,10 +13,10 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        mobile: "url('./public/assets/back-image-mobile.jpg')",
-        tablet: "url('./public/assets/back-image-tablet.jpg')",
-        laptop: "url('./public/assets/back-image-laptop.jpg')",
-        desktop: "url('./public/assets/back-image-desktop.jpg')",
+        mobile: "url('/assets/back-image-mobile.jpg')",
+        tablet: "url('/assets/back-image-tablet.jpg')",
+        laptop: "url('/assets/back-image-laptop.jpg')",
+        desktop: "url('/assets/back-image-desktop.jpg')",
       },
 
       screens: {
