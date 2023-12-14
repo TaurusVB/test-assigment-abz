@@ -1,9 +1,8 @@
-import React from "react";
 import CustomLink from "./CustomLink";
 
 const HeroSection = () => {
   return (
-    <section className="max-w-[1200px] mx-auto bg-cover bg-no-repeat h-[500px] laptop:h-[650px] bg-mobile mobile:bg-tablet tablet:bg-laptop laptop:bg-desktop flex items-center justify-center">
+    <section className="max-w-[1200px] mx-auto mb-[140px] bg-cover bg-no-repeat h-[500px] laptop:h-[650px] bg-mobile mobile:bg-tablet tablet:bg-laptop laptop:bg-desktop flex items-center justify-center">
       <div className="w-full mx-4 text-center text-white mobile:w-[328px] tablet:w-[380px]">
         <h1 className=" text-[40px]/[40px] mb-[21px]">
           Test assignment for front-end developer

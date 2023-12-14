@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  images: {
+    domains: ["frontend-test-assignment-api.abz.agency"],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

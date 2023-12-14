@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
 
@@ -13,7 +15,7 @@ const Header = () => {
         </a>
         <div className="flex items-center justify-between w-[210px]">
           <CustomLink text="Users" href="#users" />
-          <CustomLink text="Sign Up" href="#signUp" />
+          <CustomLink text="Sign up" href="#signUp" />
         </div>
       </nav>
     </header>
