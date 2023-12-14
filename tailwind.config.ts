@@ -13,17 +13,20 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
-    },
-    screens: {
-      mobile: "360px",
-      tablet: "768px",
-      laptop: "1024px",
-      desktop: "1200px",
-    },
-    colors: {
-      lightGray: "#F8F8F8",
-      blue: "#00BDD3",
-      yellow: "#F4E041",
+
+      screens: {
+        mobile: "360px",
+        tablet: "768px",
+        laptop: "1024px",
+        desktop: "1200px",
+      },
+
+      colors: {
+        lightGray: "#F8F8F8",
+        blue: "#00BDD3",
+        yellow: "#F4E041",
+        white: "#FFFFFF",
+      },
     },
   },
   plugins: [],
