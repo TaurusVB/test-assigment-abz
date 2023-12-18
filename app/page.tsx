@@ -1,3 +1,4 @@
+import FormSection from "@/components/FormSection";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import UsersSection from "@/components/UsersSection";
@@ -8,6 +9,7 @@ export default function Home() {
       <Header />
       <HeroSection />
       <UsersSection />
+      <FormSection />
     </>
   );
 }
