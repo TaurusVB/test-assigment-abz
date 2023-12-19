@@ -4,6 +4,27 @@ import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Input from "./Input";
 import CustomButton from "./CustomButton";
+import { map } from "zod";
+import RadioInput from "./RadioInput";
+
+const positions = [
+  {
+    id: 1,
+    name: "Lawyer",
+  },
+  {
+    id: 2,
+    name: "Content manager",
+  },
+  {
+    id: 3,
+    name: "Security",
+  },
+  {
+    id: 4,
+    name: "Designer",
+  },
+];
 
 const Form = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -25,6 +46,11 @@ const Form = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
     console.log(data);
+    try {
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -48,6 +74,22 @@ const Form = () => {
         type="tel"
         register={register}
       />
+      <div className="flex flex-col items-start">
+        <p className="mb-[11px]">Select your position</p>
+        <div className="flex gap-[7px]  flex-col items-start">
+          {positions.map((pos, i) => (
+            <RadioInput
+              defaultChecked={i === 0}
+              name="position"
+              key={pos.id}
+              id={pos.name.toString()}
+              type="radio"
+              label={pos.name}
+              register={register}
+            />
+          ))}
+        </div>
+      </div>
       <div>
         <CustomButton disabled={isLoading} text="Sign up" />
       </div>
