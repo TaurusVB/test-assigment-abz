@@ -1,12 +1,17 @@
 import { FC } from "react";
-import { FieldValues, UseFormRegister } from "react-hook-form";
+import { UseFormRegister } from "react-hook-form";
+import { TypeOf } from "zod";
+
+import { registerSchema } from "@/utils/validationSchema";
+
+type RegisterInput = TypeOf<typeof registerSchema>;
 
 interface IRadioInputProps {
-  name: string;
+  name: "name" | "email" | "phone" | "position" | "photo";
   id: string;
   label: string;
   type?: string;
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<RegisterInput>;
   defaultChecked: boolean;
 }
 

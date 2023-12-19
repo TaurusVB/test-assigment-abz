@@ -1,15 +1,20 @@
 import { FC } from "react";
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import { UseFormRegister } from "react-hook-form";
+import { TypeOf } from "zod";
 
 import { cn } from "@/utils/cn";
+import { registerSchema } from "@/utils/validationSchema";
+
+type RegisterInput = TypeOf<typeof registerSchema>;
 
 interface IInputProps {
-  id: string;
+  id: "name" | "email" | "phone" | "position" | "photo";
   label: string;
   type?: string;
   required?: boolean;
-  register: UseFormRegister<FieldValues>;
-  errors: FieldErrors;
+  register: UseFormRegister<RegisterInput>;
+  errors: any;
+  supportText: string;
 }
 
 const Input: FC<IInputProps> = ({
@@ -19,6 +24,7 @@ const Input: FC<IInputProps> = ({
   required,
   errors,
   type,
+  supportText,
 }) => {
   return (
     <div className=" relative">
@@ -46,11 +52,12 @@ const Input: FC<IInputProps> = ({
           focus:border-blue-600 
           peer
           border-[#D0CFCF]`,
-          errors[id] && "focus:ring-[#CB3D40]"
+          errors[id] && "focus:ring-[#CB3D40] border-[#CB3D40]"
         )}
       />
       <label
-        className=" absolute 
+        className={cn(
+          `absolute 
         text-md 
         text-zinc-400 
         transform 
@@ -73,11 +80,22 @@ const Input: FC<IInputProps> = ({
          peer-focus:left-[12px]
          rtl:peer-focus:translate-x-1/4 
          rtl:peer-focus:left-auto 
-         start-1"
+          cursor-text`,
+          errors[id] && "focus:ring-[#CB3D40] text-[#CB3D40]"
+        )}
         htmlFor={id}
       >
         {label}
       </label>
+      {errors[id]?.message ? (
+        <p className="absolute text-[#CB3D40] text-xs/[14px] left-4 -bottom-4">
+          {errors[id]?.message}
+        </p>
+      ) : (
+        <p className="absolute text-zinc-500 text-xs/[14px] left-4 -bottom-4">
+          {supportText}
+        </p>
+      )}
     </div>
   );
 };

@@ -1,11 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import Input from "./Input";
 import CustomButton from "./CustomButton";
-import { map } from "zod";
 import RadioInput from "./RadioInput";
+import { registerSchema } from "@/utils/validationSchema";
+import { TypeOf } from "zod";
+
+type RegisterInput = TypeOf<typeof registerSchema>;
 
 const positions = [
   {
@@ -32,8 +37,9 @@ const Form = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<FieldValues>({
+    formState: { errors, isSubmitSuccessful, isValid },
+    reset,
+  } = useForm<RegisterInput>({
     defaultValues: {
       name: "",
       email: "",
@@ -41,9 +47,18 @@ const Form = () => {
       position: "",
       photo: "",
     },
+    resolver: zodResolver(registerSchema),
+    delayError: 1000,
+    mode: "onChange",
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+  }, [isSubmitSuccessful, reset]);
+
+  const onSubmit: SubmitHandler<RegisterInput> = (data) => {
     setIsLoading(true);
     console.log(data);
     try {
@@ -58,7 +73,13 @@ const Form = () => {
       className="flex flex-col gap-[50px] tablet:w-[380px] mx-auto"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Input errors={errors} id="name" label="Name" register={register} />
+      <Input
+        errors={errors}
+        id="name"
+        label="Name"
+        register={register}
+        supportText="Vasyl Balaban"
+      />
 
       <Input
         errors={errors}
@@ -66,6 +87,7 @@ const Form = () => {
         label="Email address"
         type="email"
         register={register}
+        supportText="example@gmail.com"
       />
       <Input
         errors={errors}
@@ -73,6 +95,7 @@ const Form = () => {
         label="Phone number"
         type="tel"
         register={register}
+        supportText="+38 (XXX) XXX - XX - XX"
       />
       <div className="flex flex-col items-start">
         <p className="mb-[11px]">Select your position</p>
@@ -91,7 +114,7 @@ const Form = () => {
         </div>
       </div>
       <div>
-        <CustomButton disabled={isLoading} text="Sign up" />
+        <CustomButton disabled={!isValid} text="Sign up" />
       </div>
     </form>
   );
