@@ -12,6 +12,7 @@ import RadioInput from "./RadioInput";
 import ImageInput from "./ImageInput";
 import { registerSchema } from "@/utils/validationSchema";
 import Loader from "./Loader";
+import getToken from "@/utils/getToken";
 
 type RegisterInput = TypeOf<typeof registerSchema>;
 
@@ -75,7 +76,7 @@ const Form = () => {
 
   const imageFile = watch("photo");
 
-  const onSubmit: SubmitHandler<RegisterInput> = (data) => {
+  const onSubmit: SubmitHandler<RegisterInput> = async (data) => {
     setIsLoading(true);
     console.log({
       ...data,
@@ -83,6 +84,18 @@ const Form = () => {
       position_id: +data.position_id,
     });
     try {
+      const token = await getToken();
+
+      const response = await axios.post(
+        "https://frontend-test-assignment-api.abz.agency/api/v1/users",
+        {
+          ...data,
+          photo: data.photo[0],
+          position_id: +data.position_id,
+        },
+        { headers: { "Content-Type": "multipart/form-data", Token: token } }
+      );
+      console.log(response);
     } catch (error) {
     } finally {
       setIsLoading(false);
