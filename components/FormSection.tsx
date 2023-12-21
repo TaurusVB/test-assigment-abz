@@ -1,5 +1,3 @@
-"use clint";
-
 import Form from "./Form";
 import Section from "./Section";
 

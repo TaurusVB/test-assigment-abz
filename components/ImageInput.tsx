@@ -1,6 +1,6 @@
 import { cn } from "@/utils/cn";
 import { registerSchema } from "@/utils/validationSchema";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { UseFormRegister } from "react-hook-form";
 import { TypeOf } from "zod";
 
@@ -21,10 +21,6 @@ const ImageInput: FC<IImageInputProps> = ({
   supportText,
   fileName,
 }) => {
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
-
   return (
     <div className="flex relative">
       <label
