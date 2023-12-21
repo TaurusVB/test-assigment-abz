@@ -1,18 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TypeOf } from "zod";
-import axios from "axios";
 
 import Input from "./Input";
 import CustomButton from "./CustomButton";
 import RadioInput from "./RadioInput";
 import ImageInput from "./ImageInput";
 import { registerSchema } from "@/utils/validationSchema";
-import Loader from "./Loader";
-import getToken from "@/utils/getToken";
 
 type RegisterInput = TypeOf<typeof registerSchema>;
 
@@ -20,30 +17,12 @@ type Position = {
   id: number;
   name: string;
 };
+interface IFormProps {
+  onSubmit: SubmitHandler<RegisterInput>;
+  positions: Position[] | undefined;
+}
 
-const Form = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [positions, setPositions] = useState<Position[]>();
-
-  useEffect(() => {
-    fetchPositions();
-  }, []);
-
-  const fetchPositions = async () => {
-    setIsLoading(true);
-    try {
-      const response = await axios.get(
-        "https://frontend-test-assignment-api.abz.agency/api/v1/positions"
-      );
-
-      setPositions(response.data.positions);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+const Form: FC<IFormProps> = ({ onSubmit, positions }) => {
   const {
     register,
     handleSubmit,
@@ -76,36 +55,8 @@ const Form = () => {
 
   const imageFile = watch("photo");
 
-  const onSubmit: SubmitHandler<RegisterInput> = async (data) => {
-    setIsLoading(true);
-    console.log({
-      ...data,
-      photo: data.photo[0],
-      position_id: +data.position_id,
-    });
-    try {
-      const token = await getToken();
-
-      const response = await axios.post(
-        "https://frontend-test-assignment-api.abz.agency/api/v1/users",
-        {
-          ...data,
-          photo: data.photo[0],
-          position_id: +data.position_id,
-        },
-        { headers: { "Content-Type": "multipart/form-data", Token: token } }
-      );
-      console.log(response);
-    } catch (error) {
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
     <>
-      {isLoading && <Loader />}
-
       <form
         className="flex flex-col gap-[50px] tablet:w-[380px] mx-auto"
         onSubmit={handleSubmit(onSubmit)}
