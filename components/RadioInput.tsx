@@ -7,7 +7,7 @@ import { registerSchema } from "@/utils/validationSchema";
 type RegisterInput = TypeOf<typeof registerSchema>;
 
 interface IRadioInputProps {
-  name: "name" | "email" | "phone" | "position" | "photo";
+  name: "name" | "email" | "phone" | "position_id" | "photo";
   id: string;
   label: string;
   type?: string;

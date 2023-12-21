@@ -3,12 +3,13 @@
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { TypeOf } from "zod";
 
 import Input from "./Input";
 import CustomButton from "./CustomButton";
 import RadioInput from "./RadioInput";
+import ImageInput from "./ImageInput";
 import { registerSchema } from "@/utils/validationSchema";
-import { TypeOf } from "zod";
 
 type RegisterInput = TypeOf<typeof registerSchema>;
 
@@ -39,16 +40,22 @@ const Form = () => {
     handleSubmit,
     formState: { errors, isSubmitSuccessful, isValid },
     reset,
+    watch,
   } = useForm<RegisterInput>({
     defaultValues: {
       name: "",
       email: "",
       phone: "",
-      position: "",
-      photo: "",
+      position_id: "",
+      photo: {
+        name: "",
+        lastModified: 0,
+        type: "",
+        size: 0,
+      },
     },
     resolver: zodResolver(registerSchema),
-    delayError: 1000,
+    delayError: 500,
     mode: "onChange",
   });
 
@@ -58,9 +65,15 @@ const Form = () => {
     }
   }, [isSubmitSuccessful, reset]);
 
+  const imageFile = watch("photo");
+
   const onSubmit: SubmitHandler<RegisterInput> = (data) => {
     setIsLoading(true);
-    console.log(data);
+    console.log({
+      ...data,
+      photo: data.photo[0],
+      position_id: +data.position_id,
+    });
     try {
     } catch (error) {
     } finally {
@@ -78,7 +91,7 @@ const Form = () => {
         id="name"
         label="Name"
         register={register}
-        supportText="Vasyl Balaban"
+        supportText="Jhon"
       />
 
       <Input
@@ -87,7 +100,7 @@ const Form = () => {
         label="Email address"
         type="email"
         register={register}
-        supportText="example@gmail.com"
+        supportText="jhon@example.com"
       />
       <Input
         errors={errors}
@@ -103,9 +116,9 @@ const Form = () => {
           {positions.map((pos, i) => (
             <RadioInput
               defaultChecked={i === 0}
-              name="position"
+              name="position_id"
               key={pos.id}
-              id={pos.name.toString()}
+              id={pos.id.toString()}
               type="radio"
               label={pos.name}
               register={register}
@@ -113,6 +126,17 @@ const Form = () => {
           ))}
         </div>
       </div>
+      <ImageInput
+        id="photo"
+        register={register}
+        errors={errors}
+        supportText="*.jpg | *.jpeg"
+        fileName={
+          imageFile?.size !== 0
+            ? imageFile[0]?.name || "Upload your photo"
+            : "Upload your photo"
+        }
+      />
       <div>
         <CustomButton disabled={!isValid} text="Sign up" />
       </div>
