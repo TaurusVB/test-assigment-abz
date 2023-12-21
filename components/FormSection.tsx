@@ -1,16 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { FC } from "react";
 import { SubmitHandler } from "react-hook-form";
 import Image from "next/image";
-import axios from "axios";
 import { TypeOf } from "zod";
 
 import Form from "./Form";
 import Section from "./Section";
-import getToken from "@/utils/getToken";
 import { registerSchema } from "@/utils/validationSchema";
-import Loader from "./Loader";
 
 import successImage from "@/public/assets/success-image.svg";
 
@@ -21,62 +18,19 @@ type Position = {
   name: string;
 };
 
-const FormSection = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isRegisterSuccessful, setIsRegisterSuccessful] = useState(false);
-  const [positions, setPositions] = useState<Position[]>();
+interface IFormSectionProps {
+  isRegisterSuccessful: boolean;
+  onSubmit: SubmitHandler<RegisterInput>;
+  positions: Position[];
+}
 
-  useEffect(() => {
-    fetchPositions();
-  }, []);
-
-  const fetchPositions = async () => {
-    setIsLoading(true);
-    try {
-      const response = await axios.get(
-        "https://frontend-test-assignment-api.abz.agency/api/v1/positions"
-      );
-
-      setPositions(response.data.positions);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const onSubmit: SubmitHandler<RegisterInput> = async (data) => {
-    setIsLoading(true);
-    console.log({
-      ...data,
-      photo: data.photo[0],
-      position_id: +data.position_id,
-    });
-    try {
-      const token = await getToken();
-
-      await axios.post(
-        "https://frontend-test-assignment-api.abz.agency/api/v1/users",
-        {
-          ...data,
-          photo: data.photo[0],
-          position_id: +data.position_id,
-        },
-        { headers: { "Content-Type": "multipart/form-data", Token: token } }
-      );
-
-      setIsRegisterSuccessful(true);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+const FormSection: FC<IFormSectionProps> = ({
+  isRegisterSuccessful,
+  onSubmit,
+  positions,
+}) => {
   return (
     <>
-      {isLoading && <Loader />}
-
       <Section className="pb-[100px]">
         {!isRegisterSuccessful && (
           <>
