@@ -35,7 +35,7 @@ const ImageInput: FC<IImageInputProps> = ({
           bg-lightGray
           appearance-none 
           focus:ring-0 
-          w-[22%]
+          w-[83px]
           peer         
           bg-transparent  
           border-[1px] 
@@ -46,7 +46,7 @@ const ImageInput: FC<IImageInputProps> = ({
           errors[id] && "focus:ring-[#CB3D40] border-[#CB3D40]"
         )}
       >
-        <p className="ml-4">Upload</p>
+        <p className="ml-[15px] ">Upload</p>
         <input
           id={id}
           autoComplete={id}
@@ -62,7 +62,7 @@ const ImageInput: FC<IImageInputProps> = ({
           rounded-r-[4px]
           px-4 
           py-[14px] 
-          w-[78%]
+          w-[calc(100%-83px)]
           text-base/[26px]
         text-black/[87] 
           bg-lightGray
