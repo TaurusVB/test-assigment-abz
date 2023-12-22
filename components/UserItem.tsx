@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { FC } from "react";
+import { FC } from "react";
 import { Tooltip } from "react-tooltip";
 
 import photoCover from "@/public/assets/photo-cover.svg";

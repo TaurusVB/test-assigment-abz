@@ -20,10 +20,10 @@ const config: Config = {
       },
 
       screens: {
-        mobile: "360px",
-        tablet: "768px",
-        laptop: "1024px",
-        desktop: "1200px",
+        mobile: "368px",
+        tablet: "776px",
+        laptop: "1032px",
+        desktop: "1208px",
       },
 
       colors: {
