@@ -30,6 +30,8 @@ export default function Home() {
 
   useEffect(() => {
     fectchUsers();
+    fetchPositions();
+    setIsLoading(false);
   }, []);
 
   const fectchUsers = async () => {
@@ -57,6 +59,11 @@ export default function Home() {
 
       setUsers([...users!, ...response.data.users]);
 
+      if (response.data.page === response.data.total_pages) {
+        setNextLink(null!);
+        return;
+      }
+
       setNextLink(response.data.links.next_url);
     } catch (error) {
       console.log(error);
@@ -64,11 +71,6 @@ export default function Home() {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchPositions();
-    setIsLoading(false);
-  }, []);
 
   const fetchPositions = async () => {
     setIsLoading(true);
@@ -85,7 +87,7 @@ export default function Home() {
     }
   };
 
-  const onSubmit: SubmitHandler<RegisterInput> = async (data) => {
+  const handleSubmitForm: SubmitHandler<RegisterInput> = async (data) => {
     setIsLoading(true);
 
     try {
@@ -102,6 +104,8 @@ export default function Home() {
       );
 
       setIsRegisterSuccessful(true);
+
+      await fectchUsers();
     } catch (error) {
       console.log(error);
     } finally {
@@ -122,7 +126,7 @@ export default function Home() {
       />
       <FormSection
         isRegisterSuccessful={isRegisterSuccessful}
-        onSubmit={onSubmit}
+        onSubmit={handleSubmitForm}
         positions={positions!}
       />
     </>
