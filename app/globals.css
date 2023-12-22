@@ -28,4 +28,5 @@ body {
 html {
   scrollbar-color: #f4e041 #dcdcdc;
   scrollbar-width: thin;
+  scroll-behavior: smooth;
 }

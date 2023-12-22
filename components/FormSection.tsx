@@ -10,6 +10,7 @@ import Section from "./Section";
 import { registerSchema } from "@/utils/validationSchema";
 
 import successImage from "@/public/assets/success-image.svg";
+import Title from "./Title";
 
 type RegisterInput = TypeOf<typeof registerSchema>;
 
@@ -31,21 +32,17 @@ const FormSection: FC<IFormSectionProps> = ({
 }) => {
   return (
     <>
-      <Section className="pb-[100px]">
+      <Section id="signUp" className="pb-[100px]">
         {!isRegisterSuccessful && (
           <>
-            <h2 id="signUp" className="text-[40px]/[40px] mb-[50px]">
-              Working with POST request
-            </h2>
+            <Title text="Working with POST request" />
             <Form onSubmit={onSubmit} positions={positions} />
           </>
         )}
 
         {isRegisterSuccessful && (
           <>
-            <h2 className="text-[40px]/[40px] mb-[50px]">
-              User successfully registered
-            </h2>
+            <Title text="User successfully registered" />
             <Image
               width={328}
               height={290}

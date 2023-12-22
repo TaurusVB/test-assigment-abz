@@ -6,6 +6,7 @@ import Section from "./Section";
 import UserList from "./UserList";
 import CustomButton from "./CustomButton";
 import { UserType } from "@/utils/types";
+import Title from "./Title";
 
 interface IUsersSectionProps {
   users: UserType[];
@@ -19,10 +20,8 @@ const UsersSection: FC<IUsersSectionProps> = ({
   handleShowMoreBtn,
 }) => {
   return (
-    <Section className="mb-[140px]">
-      <h2 id="users" className="text-[40px]/[40px] mb-[50px]">
-        Working with GET request
-      </h2>
+    <Section id="users" className="mb-[140px]">
+      <Title text="Working with GET request" />
       <UserList users={users} />
       {nextLink !== null && (
         <CustomButton
