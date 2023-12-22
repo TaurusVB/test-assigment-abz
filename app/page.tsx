@@ -3,6 +3,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
+import { Toaster } from "react-hot-toast";
 import { TypeOf } from "zod";
 
 import FormSection from "@/components/FormSection";
@@ -13,6 +14,10 @@ import UsersSection from "@/components/UsersSection";
 import getToken from "@/utils/getToken";
 import { UserType } from "@/utils/types";
 import { registerSchema } from "@/utils/validationSchema";
+import {
+  toasterHandleError,
+  toasterHandleErrorPositions,
+} from "@/utils/toasterHandleError";
 
 type RegisterInput = TypeOf<typeof registerSchema>;
 
@@ -45,7 +50,7 @@ export default function Home() {
       setUsers(response.data.users);
       setNextLink(response.data.links.next_url);
     } catch (error) {
-      console.log(error);
+      toasterHandleError(error);
     } finally {
       setIsLoading(false);
     }
@@ -66,7 +71,7 @@ export default function Home() {
 
       setNextLink(response.data.links.next_url);
     } catch (error) {
-      console.log(error);
+      toasterHandleError(error);
     } finally {
       setIsLoading(false);
     }
@@ -81,7 +86,7 @@ export default function Home() {
 
       setPositions(response.data.positions);
     } catch (error) {
-      console.log(error);
+      toasterHandleErrorPositions(error);
     } finally {
       setIsLoading(false);
     }
@@ -107,7 +112,7 @@ export default function Home() {
 
       await fectchUsers();
     } catch (error) {
-      console.log(error);
+      toasterHandleError(error);
     } finally {
       setIsLoading(false);
     }
@@ -116,6 +121,8 @@ export default function Home() {
   return (
     <>
       {isLoading && <Loader />}
+
+      <Toaster />
 
       <Header />
       <HeroSection />

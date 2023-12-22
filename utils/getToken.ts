@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const getToken = async () => {
   try {
@@ -7,7 +8,7 @@ const getToken = async () => {
     );
     return response.data.token;
   } catch (error) {
-    console.log(error);
+    toast.error("Something went wrong...");
   }
 };
 
