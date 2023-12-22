@@ -8,7 +8,7 @@ import { registerSchema } from "@/utils/validationSchema";
 type RegisterInput = TypeOf<typeof registerSchema>;
 
 interface IInputProps {
-  id: "name" | "email" | "phone" | "position" | "photo";
+  id: "name" | "email" | "phone" | "position_id" | "photo";
   label: string;
   type?: string;
   required?: boolean;
